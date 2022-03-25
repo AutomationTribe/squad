@@ -3,6 +3,7 @@ package basePackage;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,22 +14,30 @@ public class base {
 	
 	public WebDriver _driver;
 	
-	public void Init() throws IOException {
+	public void Init(String url) throws IOException {
 		
 		System.setProperty("webdriver.chrome.driver", "C:\\Users\\SBSC\\Documents\\sbsc\\Automation\\Programs\\chromedriver.exe");
 		
 		_driver = new ChromeDriver();
 		
+		_driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS );
+		
 		_driver.manage().window().maximize();
 		
-		String url = LoadProp().getProperty("baseUrl");
+		if(url == "adminUrl") {
+			url = LoadProp().getProperty("adminUrl");
+			
+		}else if(url == "baseUrl")
+		{
+			url = LoadProp().getProperty("baseUrl");
+		}
 				
 		_driver.get(url);
 	}
 	
 	public void MerchantLogin() throws IOException {
 		
-		Init();
+		Init("baseUrl");
 		
 		LoginPage login = new LoginPage(_driver);
 		

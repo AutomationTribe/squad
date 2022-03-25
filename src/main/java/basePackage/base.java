@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import adminModulePageObjects.LandingPage;
 import merchantModulePageObjects.LoginPage;
 
 public class base {
@@ -46,6 +47,17 @@ public class base {
 		login.Password().sendKeys("Password1");
 		
 		login.LoginButton().click();
+		
+	}
+	
+	public void AdminLogin() throws IOException {
+		Init("adminUrl");
+		
+		LandingPage landing = new LandingPage(_driver);
+		
+		landing.Username().sendKeys(LoadProp().getProperty("adminUsername"));
+		landing.Password().sendKeys(LoadProp().getProperty("adminPassword"));
+		landing.LoginButton().click();
 		
 	}
 	public Properties LoadProp() throws IOException {
